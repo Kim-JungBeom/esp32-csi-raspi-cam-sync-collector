@@ -1,5 +1,3 @@
-# esp32-csi-raspi-cam-sync-collector
-Synchronized CSI/RSSI and Raspberry Pi RGB camera data collector using ESP32 and Raspberry Pi
 # ESP32-CSI Raspberry Pi Camera Sync Collector
 
 Synchronized CSI/RSSI and RGB camera data collection system using ESP32 and Raspberry Pi.  
@@ -12,18 +10,15 @@ Designed for vision-based wireless sensing research.
 This system synchronizes **CSI/RSSI collection** (ESP32) and **RGB image capture** (Raspberry Pi cameras) across 4 devices using NTP-based time synchronization.
 
 ```
-[macOS / PC]
-     │  SSH (paramiko)
-     ├──────────────────────────────────────────┐
-     │                                          │
-[cam1 RPi]  [cam2 RPi]              [ap-rpi]   [sta-rpi]
- cam_recorder.py                  ap_trigger.py  csi_save.py
-     │                                  │             │
- Picamera2                         GPIO → ESP32 AP   ESP32 STA (serial)
-                                         │
-                                    UDP packet
-                                         │
-                                    ESP32 STA → CSI output
+[macOS / PC]  ←  Commander.ipynb
+     │  SSH (simultaneous)
+     ├── [cam1 RPi] ── cam_recorder.py ── Picamera2 ──> images/
+     ├── [cam2 RPi] ── cam_recorder.py ── Picamera2 ──> images/
+     ├── [ap-rpi]   ── ap_trigger.py ── GPIO ──> [ESP32 AP]
+     │                                                  │ UDP
+     └── [sta-rpi]  ── csi_save.py <── Serial ── [ESP32 STA]
+                              │
+                              └──> CSI Data/
 ```
 
 ---
