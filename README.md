@@ -81,7 +81,8 @@ pip install RPi.GPIO
 ```
 
 ### ESP32
-- ESP-IDF v5.x
+- ESP-IDF v4.4.x
+- Tested on **ESP32-S3** (other ESP32 variants should work)
 - Build and flash `ESP32-CSI_AP` to AP ESP32
 - Build and flash `ESP32-CSI_Sta` to STA ESP32
 
@@ -134,7 +135,7 @@ DEVICES = {
 
 | Device | Output | Format |
 |---|---|---|
-| cam1, cam2 | `~/Raspcam/images/` | JPEG + timestamp CSV |
+| cam1, cam2 | `~/Raspcam/cam_data_{hostname}/` | JPEG + timestamp CSV |
 | sta-rpi | `~/ESP32-CSI_Sta/CSI Data/` | CSV (sample, RSSI, CSI raw) |
 | ap-rpi | `~/ESP32-CSI_AP/trigger_data/` | CSV (sample, scheduled_time, actual_time) |
 
@@ -142,7 +143,8 @@ DEVICES = {
 
 ## Acknowledgements
 
-ESP32 firmware is based on [ESP32-CSI-Tool](https://github.com/StevenMHernandez/ESP32-CSI-Tool) by Steven M. Hernandez, licensed under the MIT License.
+This project is based on [ESP32-CSI-Tool](https://github.com/StevenMHernandez/ESP32-CSI-Tool) by Steven M. Hernandez, licensed under the MIT License.
+Modifications by Kim-JungBeom.
 
 - GitHub: https://github.com/StevenMHernandez/ESP32-CSI-Tool
 - Website: https://stevenmhernandez.github.io/ESP32-CSI-Tool/
