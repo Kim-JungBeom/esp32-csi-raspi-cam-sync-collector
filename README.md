@@ -7,7 +7,7 @@ Designed for vision-based wireless sensing research.
 
 ## System Overview
 
-This system synchronizes **CSI/RSSI collection** (ESP32-S3) and **RGB image capture** (Raspberry Pi Camera Module V2) across the AP and distributed cameras using Network Time Protocol (NTP)-based time synchronization.
+This system synchronizes CSI/RSSI collection (ESP32-S3) and RGB image capture (Raspberry Pi Camera Module V2) across the STA, AP, and distributed cameras using Network Time Protocol (NTP)-based time synchronization.
 
 ```
 [macOS / PC]  ←  Commander.ipynb
