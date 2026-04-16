@@ -117,6 +117,10 @@ DEVICES = {
 | ap-rpi | `~/ESP32-CSI_AP/trigger_data/` | CSV (sample, scheduled_time, actual_time) |
 
 ---
+## Citation
+
+If you used this system and it is relevant to your research, 
+please consider citing:
 
 ## Acknowledgements
 
