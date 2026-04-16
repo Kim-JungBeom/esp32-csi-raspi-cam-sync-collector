@@ -57,29 +57,6 @@ This system synchronizes CSI/RSSI collection (ESP32-S3) and RGB image capture (R
 ```
 
 ---
-
-## Prerequisites
-
-### PC / macOS
-```bash
-pip install paramiko
-```
-
-### Raspberry Pi (cam1, cam2)
-```bash
-pip install picamera2 numpy pillow
-```
-
-### Raspberry Pi (sta-rpi)
-```bash
-pip install pyserial
-```
-
-### Raspberry Pi (ap-rpi)
-```bash
-pip install RPi.GPIO
-```
-
 ### ESP32
 - ESP-IDF v4.4.x
 - Tested on **ESP32-S3** (other ESP32 variants should work)
