@@ -121,6 +121,21 @@ DEVICES = {
 
 If you used this system and it is relevant to your research, 
 please consider citing:
+```bibtex
+@misc{kim2026distributedmultiviewvisiononlyrssi,
+      title={Distributed Multi-View Vision-Only RSSI Estimation}, 
+      author={Jung-Beom Kim and Woongsup Lee},
+      year={2026},
+      eprint={2604.26738},
+      archivePrefix={arXiv},
+      primaryClass={cs.IT},
+      url={[https://arxiv.org/abs/2604.26738](https://arxiv.org/abs/2604.26738)}, 
+}
+```
+## Contact
+
+For any questions or inquiries, please contact:
+**Jung-Beom Kim** ([kjung99@yonsei.ac.kr](mailto:kjung99@yonsei.ac.kr))
 
 ## Acknowledgements
 
