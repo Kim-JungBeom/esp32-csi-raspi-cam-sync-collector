@@ -9,6 +9,8 @@ Designed for vision-based wireless sensing research.
 
 This system synchronizes CSI/RSSI collection (ESP32-S3) and RGB image capture (Raspberry Pi Camera Module V2) across the STA, AP, and distributed cameras using Network Time Protocol (NTP)-based time synchronization.
 
+The role-based architecture is designed for extensibility: additional cameras can be attached as vision nodes and additional ESP32 AP/STA pairs can be added as independent wireless links, **without requiring modifications to the per-node firmware or the controller logic**.
+
 ```
 [macOS / PC]  ←  Commander.ipynb
      │  SSH (simultaneous)
@@ -57,6 +59,7 @@ This system synchronizes CSI/RSSI collection (ESP32-S3) and RGB image capture (R
 ```
 
 ---
+
 ### ESP32
 - ESP-IDF v4.4.x
 - Tested on **ESP32-S3** (other ESP32 variants should work)
@@ -77,12 +80,14 @@ INTERVAL_MS    = 50       # Image capture interval (ms) → 20Hz
 CSI_MULTIPLIER = 2        # CSI collected N× denser than images
                           # CSI interval = INTERVAL_MS / CSI_MULTIPLIER
                           # CSI samples  = NUM_SAMPLES × CSI_MULTIPLIER
+                          # Higher multiplier enables temporal averaging/smoothing
+                          # in post-processing to mitigate stochastic hardware noise
 
 CAM_WIDTH    = 640
 CAM_HEIGHT   = 480
 CAM_QUALITY  = 80         # JPEG quality (0-100)
-CAM_EXPOSURE = 10         # Exposure time (ms)
-CAM_GAIN     = 2.0        # Analogue gain
+CAM_EXPOSURE = 10         # Exposure time (ms); fixed to ensure consistent visual measurements
+CAM_GAIN     = 2.0        # Analogue gain; fixed to ensure consistent visual measurements
 ```
 
 SSH credentials:
@@ -103,8 +108,26 @@ DEVICES = {
 
 1. Flash ESP32 AP and STA firmware
 2. Ensure all Raspberry Pis are on the same network and reachable via mDNS
-3. Open `Commander.ipynb` and set parameters
-4. Run the notebook — it will SSH into all 4 devices simultaneously and start the experiment at the same scheduled time
+3. **Recommended**: Host the NTP server on a local laptop on the same LAN rather than relying on a remote public server. This reduces network latency between the controller and the edge nodes, tightening the residual clock offset.
+4. Open `Commander.ipynb` and set parameters
+5. Run the notebook — it will SSH into all 4 devices simultaneously and start the experiment at the same scheduled time
+
+> **Warm-up**: The initial connection phase may produce larger offsets. Discarding early samples as a warm-up period reduces the offset to a negligible level.
+
+---
+
+## Synchronization Performance
+
+All four RPi nodes synchronize their clocks to a common NTP server before each experiment, bounding the residual offset to the millisecond range on a typical local network. The AP-side RPi trigger log records both the **scheduled** and **actual** trigger times for each sample, allowing residual jitter to be **quantitatively verified** rather than merely assumed.
+
+The table below reports synchronization offset statistics measured on a local LAN with a laptop NTP server:
+
+| Source | Mean (ms) | Std (ms) | Max (ms) |
+|---|---|---|---|
+| AP Trigger | 0.0151 | 0.1944 | 8.0 |
+| Image Capture | 0.0099 | 0.1349 | 3.0 |
+
+Both the wireless and vision pipelines remain aligned at the **sub-millisecond level on average**. The large maximum offsets occur during the initial connection phase and are eliminated after discarding the warm-up interval.
 
 ---
 
@@ -116,7 +139,10 @@ DEVICES = {
 | sta-rpi | `~/ESP32-CSI_Sta/CSI Data/` | CSV (sample, RSSI, CSI raw) |
 | ap-rpi | `~/ESP32-CSI_AP/trigger_data/` | CSV (sample, scheduled_time, actual_time) |
 
+> The AP trigger log (`scheduled_time` vs `actual_time`) can be used to quantitatively verify residual trigger jitter for each experiment.
+
 ---
+
 ## Citation
 
 If you used this system and it is relevant to your research, 
@@ -129,9 +155,10 @@ please consider citing:
       eprint={2604.26738},
       archivePrefix={arXiv},
       primaryClass={cs.IT},
-      url={[https://arxiv.org/abs/2604.26738](https://arxiv.org/abs/2604.26738)}, 
+      url={https://arxiv.org/abs/2604.26738}, 
 }
 ```
+
 ## Contact
 
 For any questions or inquiries, please contact:
