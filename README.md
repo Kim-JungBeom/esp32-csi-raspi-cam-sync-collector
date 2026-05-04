@@ -127,7 +127,7 @@ The table below reports synchronization offset statistics measured on a local LA
 | AP Trigger | 0.0151 | 0.1944 | 8.0 |
 | Image Capture | 0.0099 | 0.1349 | 3.0 |
 
-Both the wireless and vision pipelines remain aligned at the **sub-millisecond level on average**. The large maximum offsets occur during the initial connection phase and are eliminated after discarding the warm-up interval.
+Both the wireless and vision pipelines remain aligned at the **sub-millisecond level on average**. The large maximum offsets occur during the initial connection phase, and discarding this interval as a warm-up period reduces the offset to a negligible level.
 
 ---
 
