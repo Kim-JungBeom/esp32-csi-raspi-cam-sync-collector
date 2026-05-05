@@ -116,21 +116,6 @@ DEVICES = {
 
 ---
 
-## Synchronization Performance
-
-All four RPi nodes synchronize their clocks to a common NTP server before each experiment, bounding the residual offset to the millisecond range on a typical local network. The AP-side RPi trigger log records both the **scheduled** and **actual** trigger times for each sample, allowing residual jitter to be **quantitatively verified** rather than merely assumed.
-
-The table below reports synchronization offset statistics measured on a local LAN with a laptop NTP server:
-
-| Source | Mean (ms) | Std (ms) | Max (ms) |
-|---|---|---|---|
-| AP Trigger | 0.0151 | 0.1944 | 8.0 |
-| Image Capture | 0.0099 | 0.1349 | 3.0 |
-
-Both the wireless and vision pipelines remain aligned at the **sub-millisecond level on average**. The large maximum offsets occur during the initial connection phase, and discarding this interval as a warm-up period reduces the offset to a negligible level.
-
----
-
 ## Output Data
 
 | Device | Output | Format |
